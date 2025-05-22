@@ -1,160 +1,453 @@
-Claro! Aqui está o conteúdo completo, já com os novos tópicos (7 a 10) e a conclusão, tudo em um único arquivo fácil de copiar e colar. Mantive os emojis e fiz apenas ajustes mínimos para manter a coesão visual:
+# 🛡️ Workshop: Introdução ao DevSecOps para Iniciantes
 
 ---
 
-# 🛡️ Introdução ao DevSecOps
-
-DevSecOps é a prática de integrar segurança em todas as fases do ciclo de vida do desenvolvimento de software — desenvolvimento, build, testes, deploy e operação.
-Em vez de adicionar segurança no final, ela é incorporada desde o início, com automações e responsabilidades compartilhadas entre devs, ops e segurança.
+## 🔷 Parte 1: O que é DevSecOps?
 
 ---
 
-## 1. Segurança no Código 🧑‍💻🔐
+### 📘 Etimologia e Significado
 
-### 🔍 Análise Estática (SAST)
+DevSecOps é a junção de três áreas:
 
-* Examina o código fonte antes da execução.
-* Detecta vulnerabilidades como SQL Injection, XSS, hardcoded secrets, etc.
-* Exemplo de ferramentas: SonarQube, Semgrep, Checkov, Bandit.
+* **Dev**: de Desenvolvimento (programação e criação de sistemas)
+* **Sec**: de Security (segurança da informação)
+* **Ops**: de Operações (infraestrutura, deploy e monitoramento)
 
-### ✅ Boas práticas
-
-* Validar entradas.
-* Evitar hardcoded secrets.
-* Lidar corretamente com autenticação e autorização.
+Juntas, formam uma cultura e práticas que integram desenvolvimento, segurança e operações de forma contínua e colaborativa.
 
 ---
 
-## 2. Gerenciamento de Dependências 📦
+### ❓ Por que DevSecOps existe?
 
-* Manter bibliotecas e pacotes atualizados evita vulnerabilidades conhecidas.
-* Usar ferramentas para escanear dependências (como Trivy, OWASP Dependency-Check).
-* Cuidar com pacotes de fontes duvidosas (supply chain attacks).
+No passado, essas áreas trabalhavam separadamente:
 
----
+* Dev escrevia o código
+* Ops colocava o código no ar
+* Segurança revisava no final
 
-## 3. Pipelines Seguros no CI/CD 🏗️🔒
-
-* CI/CD automatiza builds, testes e deploys, mas também pode ser vetor de ataques.
-* Cuidados:
-
-  * Proteger variáveis de ambiente (e.g. secrets).
-  * Evitar comandos perigosos em pipelines.
-  * Isolar ambientes de execução (runners).
-* Usar ferramentas como Trivy para escanear imagens Docker.
+Isso gerava atrasos, erros e falhas de segurança porque a proteção só era pensada no final do processo.
+Com DevSecOps, a segurança é incorporada desde o começo, com colaboração entre todos os times.
 
 ---
 
-## 4. Testes Automatizados 🧪
+### 💡 Definição simples
 
-* Unitários, integração e testes de segurança devem ser parte do pipeline.
-* Ferramentas:
-
-  * **SAST** (análise estática)
-  * **DAST** (Dynamic Application Security Testing)
-  * **IAST** (Interactive Application Security Testing)
+**DevSecOps é uma forma moderna de construir sistemas seguros, onde todo mundo é responsável pela segurança — não apenas um time separado.**
 
 ---
 
-## 5. Infraestrutura como Código (IaC) + Segurança 🏗️🛡️
+### 👥 O que fazem os times de DevSecOps?
 
-* IaC define infra como código (ex: Terraform, Ansible, Helm).
-* Pode ter vulnerabilidades (ex: S3 bucket aberto).
-* Ferramentas de segurança para IaC:
-
-  * Checkov
-  * tfsec
-  * kube-score
-  * Polaris
+| Área            | Exemplo de Atividade                                                |
+| --------------- | ------------------------------------------------------------------- |
+| Desenvolvimento | Escrever código seguro e seguindo boas práticas                     |
+| Segurança       | Analisar vulnerabilidades no código e nas dependências              |
+| Operações       | Automatizar deploys seguros e configurar infraestrutura             |
+| Integração      | Criar pipelines que testam, validam e publicam código com segurança |
 
 ---
 
-## 6. Segurança em Containers 🔒🐳
+### ⚙️ Automação: o coração do DevSecOps
 
-* Containers compartilham kernel e recursos, o que pode ser perigoso se mal configurado.
-* Cuidados:
-
-  * Usar imagens oficiais e mínimas.
-  * Escanear imagens (Trivy, Clair, Grype).
-  * Não rodar como root.
-  * Habilitar seccomp/apparmor/capabilities.
+DevSecOps usa **muita automação** para garantir rapidez, qualidade e segurança na entrega de software.
 
 ---
 
-## 7. SBOM (Software Bill of Materials) e Dependency Check 📄🧩
+### 🚀 O que é CI/CD?
 
-### 🧾 SBOM
+* **CI (Integração Contínua)**: os desenvolvedores enviam código frequentemente para um repositório central. O código é automaticamente testado e validado a cada alteração.
 
-* Documento que lista todas as partes e bibliotecas usadas no software, incluindo versões.
-* Ajuda a entender exatamente o que está rodando e facilita identificar problemas e cumprir regulamentações.
+* **CD (Entrega Contínua / Deployment Contínuo)**: o código aprovado é automaticamente enviado para ambientes de testes, homologação ou produção, reduzindo intervenção manual.
 
-### 🕵️ Dependency Check
-
-* Usa SBOM para analisar dependências do projeto e detectar versões vulneráveis.
-* Ajuda a evitar problemas antes que eles cheguem em produção.
+> Pense nisso como uma esteira de montagem automática, onde o código entra por um lado e sai funcionando do outro, seguro e testado.
 
 ---
 
-## 8. Semantic Release 🔖🚀
+### 🔐 Segurança dentro do CI/CD (DevSecOps)
 
-* Automatiza o versionamento e a criação de releases com base nas mensagens de commit seguindo o padrão [Conventional Commits](https://www.conventionalcommits.org/).
+**DevSecOps insere etapas de segurança dentro dessa esteira automatizada:**
+
+| Fase       | Ação de DevSecOps                                          |
+| ---------- | ---------------------------------------------------------- |
+| CI         | Verificar falhas de segurança no código e bibliotecas      |
+| Build      | Escanear imagens de container em busca de vulnerabilidades |
+| CD         | Aplicar políticas de segurança antes do deploy             |
+| Pós-deploy | Monitorar comportamento suspeito e disparar alertas        |
+
+---
+
+### 🛠️ Automatizações comuns em DevSecOps
+
+| Tarefa                           | Ferramenta Exemplo                   |
+| -------------------------------- | ------------------------------------ |
+| Teste de código seguro           | SonarQube, CodeQL                    |
+| Escaneamento de vulnerabilidades | Trivy, Snyk, Anchore                 |
+| Validação de infraestrutura      | Checkov, TFLint                      |
+| Deploy automatizado              | GitLab CI/CD, GitHub Actions, ArgoCD |
+| Monitoramento e alertas          | Prometheus, Grafana, Falco           |
+
+---
+
+### 📦 Exemplo prático (simplificado)
+
+Quando um desenvolvedor faz uma alteração:
+
+* 🔍 O código passa por testes de qualidade
+* 🧪 Executa testes automatizados de funcionalidade
+* 🔐 Escaneia o código e dependências para falhas de segurança
+* 🧰 Gera imagem Docker segura (se aplicável)
+* ☁️ Faz deploy automático em ambiente de testes
+* 👀 Monitora o sistema em produção para detectar problemas
+
+**Tudo isso automaticamente, sem precisar que alguém execute manualmente cada etapa.**
+
+---
+
+### 🎯 Benefícios do DevSecOps
+
+* ✅ Menos vulnerabilidades em produção
+* ⚡ Entregas mais rápidas e seguras
+* 🤝 Melhor comunicação entre os times
+* 🔁 Menos retrabalho e custos menores
+* 🔒 Software mais confiável e seguro
+
+---
+
+### 👪 Como explicar para leigos?
+
+> “É como montar um carro já pensando na segurança desde a montagem da primeira peça, não só colocando o cinto de segurança no final.”
+
+---
+
+### 📌 Resumo para slides
+
+* DevSecOps = Dev (Desenvolvimento) + Sec (Segurança) + Ops (Operações)
+* Integra segurança desde o começo
+* Todo mundo é responsável pela segurança
+* Foco em automação, colaboração e entrega contínua
+* Benefícios: segurança + velocidade + qualidade
+
+---
+
+### 🧩 Linguagens mais usadas em DevSecOps
+
+Essas são as linguagens que mais aparecem no dia a dia de DevSecOps, com suas funções principais:
+
+* **YAML** → Configuração de CI/CD, Kubernetes, Helm, ArgoCD.
+  *Simples, declarativa e fácil de ler.*
+
+* **Bash / Shell** → Scripts de automação e pipelines.
+  *Presente em todo ambiente Linux.*
+
+* **Python** → Scripts, automações e ferramentas de segurança como DefectDojo.
+  *Fácil de escrever, poderosa e com muitas bibliotecas.*
+
+* **Go (Golang)** → Ferramentas como Trivy, Docker, Kubernetes, Helm.
+  *Rápida, compilada e ideal para ferramentas CLI.*
+
+* **JavaScript / TypeScript** → Testes (Jest, Cypress), ferramentas como Commitizen e semantic-release.
+  *Muito usada no ecossistema web.*
+
+* **Java** → Base de ferramentas como SonarQube e sistemas enterprise.
+  *Popular em grandes empresas e soluções robustas.*
+
+* **HCL (Terraform)** → Infraestrutura como código com Terraform.
+  *Específica, declarativa e simples de usar.*
+
+---
+
+## 🔷 Parte 2: Ferramentas e Conceitos Explicados
+
+---
+
+### 🧱 1. Dev Container e Scaffolding
+
+#### 📦 Dev Container
+
+**O que é:**
+Um ambiente de desenvolvimento definido como código, geralmente usando Docker.
+Garante que todos desenvolvedores trabalhem com as mesmas versões de linguagens, bibliotecas e ferramentas, evitando erros do tipo “na minha máquina funciona”.
+
+**Exemplo real:**
+No VSCode, você pode usar a extensão “Remote - Containers”. Criando um arquivo `.devcontainer.json`, o VSCode abre o projeto dentro de um container Docker com tudo configurado (Node, Python, banco de dados, etc.).
+
+---
+
+#### 🧰 Scaffolding
+
+**O que é:**
+Processo automatizado que gera a estrutura inicial do projeto para você, com pastas, arquivos básicos e configuração inicial.
+
+**Exemplo real:**
+
+* Angular CLI: `ng new meu-projeto` cria toda a base do app com testes, rotas, estilos e configurações.
+* Yeoman: Ferramenta genérica que, via geradores, cria projetos React, Node.js, APIs, etc.
+
+---
+
+### 📏 2. Lint e Commitlint (Commitizen, Lefthook)
+
+#### 🧹 Lint
+
+**O que é:**
+Ferramenta que analisa o código fonte para encontrar problemas de sintaxe, estilo, complexidade e até possíveis bugs antes da execução.
+
+**Exemplo real:**
+
+* ESLint: Detecta código mal formatado, variáveis não usadas etc.
+* Pylint: Faz o mesmo para Python.
+
+---
+
+#### 📝 Commitlint
+
+**O que é:**
+Valida as mensagens dos commits para seguir um padrão, como o Conventional Commits.
+
+**Exemplo real:**
+
+* **Commitizen**: Ajuda o dev a escrever commits padronizados por meio de perguntas simples.
+* **Lefthook**: Roda scripts antes do commit/push, como ESLint, commitlint e testes automaticamente.
+
+---
+
+### 🧪 3. Scan de Vulnerabilidades em Dependências
+
+#### ❗ Por que é importante?
+
+Bibliotecas de terceiros podem ter falhas conhecidas.
+Se você usa uma versão vulnerável, seu app fica exposto.
+
+---
+
+#### 🔍 Ferramentas
+
+* **Trivy**
+
+  * Escaneia containers Docker, código-fonte e dependências.
+  * Usa bases públicas para identificar falhas.
+  * Muito rápido e popular em pipelines CI/CD.
+
+* **OWASP Dependency-Check**
+
+  * Analisa bibliotecas usadas (Java, .NET, Python, Node.js).
+  * Gera relatórios detalhados para priorizar atualizações.
+
+---
+
+### 🧪 4. Testes
+
+#### 🧩 Teste Unitário
+
+* Testa componentes isolados (função, classe).
 * Exemplo:
 
-  * Se o commit for um **bugfix**, incrementa a versão **patch** (`1.0.1 → 1.0.2`).
-  * Se for uma **nova funcionalidade**, incrementa a versão **minor** (`1.0.2 → 1.1.0`).
-* Reduz erros manuais no controle de versão e mantém o histórico claro e organizado.
+  * **Jest** para JavaScript
+  * **JUnit** para Java
 
 ---
 
-## 9. Deploy Automático: Docker, Kubernetes, ArgoCD e Helm Charts 🚢📦⎈📜
+#### 🔗 Teste E2E (End-to-End)
 
-### 🐳 Docker
+* Simula comportamento do usuário no sistema completo.
+* Exemplo:
 
-* Empacota a aplicação e suas dependências dentro de containers, garantindo que rodem iguais em qualquer ambiente.
-
-### ⎈ Kubernetes
-
-* Plataforma para gerenciar esses containers em escala, automatizando deploy, escalabilidade e recuperação em caso de falhas.
-* Permite rodar várias cópias da sua aplicação e distribuir a carga.
-
-### 📦 Helm Charts
-
-* Helm facilita a instalação e gestão de aplicações no Kubernetes.
-* Charts são pacotes com tudo que sua aplicação precisa para rodar, incluindo configurações e templates.
-* Com Helm, você instala ou atualiza aplicações com comandos simples, sem mexer diretamente em arquivos YAML complexos.
-
-### 🔁 ArgoCD
-
-* Ferramenta de GitOps que sincroniza o estado do seu cluster Kubernetes com o código no Git.
-* Permite deploys automáticos, seguros e reversões rápidas.
+  * **Cypress**
+  * **Selenium**
 
 ---
 
-## 10. Monitoramento e Feedback Pós-Deploy 📊📈🚨
+#### 🔁 Teste Automatizado
 
-* Após o deploy, é importante acompanhar se tudo está funcionando bem.
-* Ferramentas como:
-
-  * **Prometheus**: coleta métricas.
-  * **Grafana**: visualiza os dados.
-* Alertas configurados nessas ferramentas avisam o time se algo não estiver certo.
-* Esse monitoramento fecha o ciclo de DevSecOps, garantindo que problemas sejam detectados e corrigidos rapidamente.
+* Testes que rodam automaticamente a cada alteração no código.
+* Integrados em pipelines CI/CD.
 
 ---
 
-## 🎯 Conclusão: Cultura DevSecOps e Colaboração
+#### 📊 Coverage (Cobertura)
 
-* DevSecOps não é só um conjunto de ferramentas, mas uma **cultura** que une desenvolvimento, segurança e operações.
-* O objetivo é que todos trabalhem juntos desde o começo para entregar software seguro, de qualidade e rapidamente.
-* Práticas como:
+* Mede quantas linhas, funções ou blocos de código foram testados.
+* Ferramentas:
 
-  * Revisão de código,
-  * Pair programming,
-  * Automação,
-  * Comunicação aberta,
-    são essenciais.
-* Essa colaboração constante fortalece o time, reduz erros e acelera entregas confiáveis.
+  * **Istanbul** (JS)
+  * **Jacoco** (Java)
 
 ---
 
-Se quiser, posso gerar esse conteúdo também em `.md` (Markdown) pronto para download. Deseja isso?
+### 🔍 5. SAST e DAST
+
+#### 🧠 SAST (Static Application Security Testing)
+
+Analisa o código-fonte procurando padrões inseguros.
+
+##### ☑️ SonarQube
+
+* Suporte a diversas linguagens (Java, JS, Python, etc)
+* Aponta:
+
+  * Bugs
+  * Vulnerabilidades
+  * Code Smells
+  * Cobertura de testes
+  * Cópia/cola de código
+  * Complexidade ciclomática
+
+> Pode ser rodado localmente via Docker ou usado via SonarCloud.
+
+---
+
+#### 🕸️ DAST (Dynamic Application Security Testing)
+
+Testa a aplicação em execução, simulando ataques reais.
+
+##### 🧰 OWASP ZAP
+
+* Scanner automático e manual de aplicações
+* Integrável com pipelines CI/CD
+
+---
+
+### 📋 6. DefectDojo
+
+* Plataforma de gestão de vulnerabilidades.
+* Consolida resultados de SAST, DAST, pentests.
+* Facilita priorização, relatórios e acompanhamento para equipes.
+
+---
+
+### 📦 7. SBOM (Software Bill of Materials) e Dependency Check
+
+#### 📑 SBOM
+
+* Documento que lista todas as bibliotecas e versões usadas no software.
+* Ajuda a entender exatamente o que está rodando em produção.
+* Facilita auditorias de segurança, conformidade e resposta a incidentes.
+
+#### 🛠️ Ferramentas de SBOM
+
+* **Syft**
+
+  * Gera SBOMs a partir de containers, diretórios e repositórios.
+* **CycloneDX**
+
+  * Formato padrão para SBOM, com suporte por várias ferramentas.
+* **Trivy**
+
+  * Além de scanner, também pode gerar SBOMs.
+
+## 🧩 8. Infraestrutura como Código (IaC)
+
+---
+
+### 📜 O que é IaC?
+
+* **Infraestrutura como Código** é a prática de definir toda a infraestrutura (servidores, redes, balanceadores, etc.) através de arquivos de configuração legíveis por máquina, que podem ser versionados e automatizados.
+
+* Substitui a configuração manual, trazendo confiabilidade, repetibilidade e auditabilidade.
+
+---
+
+### 🛠️ Ferramentas populares
+
+* **Terraform** (HashiCorp) — Declarativo, multi-cloud
+* **AWS CloudFormation** — Para AWS
+* **Ansible** — Automação por playbooks (também pode fazer config de infra)
+* **Pulumi** — Usa linguagens tradicionais (TypeScript, Python, Go) para IaC
+
+---
+
+### 🚀 Benefícios
+
+* Provisionamento rápido e consistente
+* Facilita replicação de ambientes
+* Integração com pipelines DevOps/DevSecOps
+* Permite revisões de mudanças via Git
+
+---
+
+## 🧪 9. Containers, Kubernetes e Segurança
+
+---
+
+### 📦 Containers
+
+* São ambientes isolados para executar aplicações e dependências.
+* Facilitam portabilidade e consistência entre dev, teste e produção.
+
+---
+
+### 🧩 Kubernetes
+
+* Orquestrador de containers.
+* Garante escalabilidade, alta disponibilidade, deploys automáticos, e gerenciamento de recursos.
+
+---
+
+### 🔒 Segurança em Kubernetes
+
+* **Políticas de rede (Network Policies)** para controlar comunicação entre pods
+* **Pod Security Policies** para restringir privilégios
+* **Imagem segura** com escaneamento via Trivy ou Clair
+* **Role-Based Access Control (RBAC)** para limitar permissões
+* **Segurança em runtime** com Falco, Aqua Security, etc.
+
+---
+
+### 🧰 Ferramentas DevSecOps para Kubernetes
+
+* **Helm**: gerenciador de pacotes para apps Kubernetes, permite versionamento e reutilização.
+* **ArgoCD**: GitOps para Kubernetes, sincroniza configs do Git com o cluster automaticamente.
+* **Trivy**: escaneia vulnerabilidades em imagens container e infraestrutura.
+
+---
+
+## 🔍 10. Monitoramento, Alertas e Resposta a Incidentes
+
+---
+
+### 📊 Monitoramento Contínuo
+
+* Monitorar a saúde, performance e segurança dos sistemas em produção.
+* Detectar anomalias antes que se tornem problemas graves.
+
+---
+
+### 🛎️ Alertas
+
+* Configurar alertas para falhas, comportamentos estranhos, ou ataques detectados.
+* Notificar equipes via email, SMS, Slack, etc.
+
+---
+
+### 🧑‍🚒 Resposta a Incidentes
+
+* Plano para investigar, mitigar e corrigir vulnerabilidades ou falhas.
+* Uso de ferramentas de log (ELK Stack), SIEM, e playbooks automáticos.
+
+---
+
+### 🛠️ Ferramentas Comuns
+
+| Tipo          | Ferramenta                                  | Função                          |
+| ------------- | ------------------------------------------- | ------------------------------- |
+| Monitoramento | Prometheus, Grafana                         | Métricas, dashboards            |
+| Logging       | ELK Stack (Elasticsearch, Logstash, Kibana) | Centralização e análise de logs |
+| Segurança     | Falco, Wazuh                                | Detecção de intrusão em runtime |
+| Alertas       | Alertmanager, PagerDuty                     | Gestão e disparo de alertas     |
+
+---
+
+## 🏁 Conclusão
+
+---
+
+* DevSecOps é uma evolução natural para acelerar entregas sem abrir mão da segurança.
+* Integração, automação e colaboração são pilares essenciais.
+* Conhecer as ferramentas e processos é fundamental para aplicar DevSecOps na prática.
+* A segurança deixa de ser responsabilidade exclusiva de um time e passa a ser parte do DNA de todo ciclo de desenvolvimento.
+
+---
+
+💡 **Dica final:** Comece pequeno, automatize o que for possível e vá aumentando a maturidade gradualmente.
+Segurança é um processo contínuo, não um evento.
